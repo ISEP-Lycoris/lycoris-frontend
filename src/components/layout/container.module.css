@@ -1,0 +1,55 @@
+.global {
+  position: relative;
+  background-color: white;
+  z-index: 1;
+}
+
+.container {
+  position: relative;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-around;
+  z-index: 1;
+  transform: translateZ(1px);
+}
+
+.container .inner {
+  display: flex;
+  width: 100%;
+  max-width: 1320px;
+  padding: 16px;
+}
+
+.hero {
+  position: relative;
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-around;
+  z-index: 1;
+  transform:translateZ(1px);
+}
+
+.hero .inner {
+  display: flex;
+  width: 100%;
+  max-width: 1080px;
+  padding: 16px;
+}
+
+.containerVariantDefault {
+  background-color: white;
+}
+
+.containerVariantBeige {
+  background-color: var(--color-beige-50);
+}
+
+.containerVariantDarkGreen {
+  background-color: var(--color-darkGreen-brand);
+}
+
+.containerVariantNeutral {
+  background-color: var(--color-neutral-50);
+}
