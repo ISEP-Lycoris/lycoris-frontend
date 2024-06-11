@@ -3,13 +3,15 @@ import {Inter} from "next/font/google";
 import {useRouter} from "next/router";
 import {Container} from "@/components/layout/container";
 import {Desktop, Mobile} from "@/components/layout/responsive";
-import {Breadcrumbs} from "@mui/material";
+import {Breadcrumbs, Button} from "@mui/material";
 import {BasicBreadcrumbs} from "@/components/navigation/breadcrumbs";
 import Typography from "@mui/material/Typography";
 import {EventCard} from "@/components/business/EventCard";
 import {Grid} from "@/components/layout/grid";
 import {useEffect, useState} from "react";
 import {type Event } from "@/API/types/types"
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -45,42 +47,17 @@ export default function Home() {
               </BasicBreadcrumbs>
             </div>
             <div style={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'center', paddingTop: '36px', }}>
-              <Grid>
-                <EventCard Date={""} Place={""} Title={""}/>
-                <EventCard Date={""} Place={""} Title={""}/>
-                <EventCard Date={""} Place={""} Title={""}/>
-                <EventCard Date={""} Place={""} Title={""}/>
-                <EventCard Date={""} Place={""} Title={""}/>
-              </Grid>
+              {events.length === 0 ? (
+                <p>Aucun événement trouvé.</p>
+              ) : (
+                <Grid>
+                  {
+                    events.map((event) => (<EventCard key={event.id} event={event}/>))
+                  }
+                  <AddEventCard/>
+                </Grid>
+              )}
             </div>
-          </div>
-          <div>
-            <h1>Liste des événements</h1>
-            {events.length === 0 ? (
-              <p>Aucun événement trouvé.</p>
-            ) : (
-              <ul>
-                {events.map(event => (
-                  <li key={event.id}>
-                    <h2>{event.name}</h2>
-                    <p>Heure de début: {event.begin_time}</p>
-                    <p>Heure de fin: {event.end_time}</p>
-                    <p>Durée: {event.duration} minutes</p>
-                    <h3>Salle: {event.room.name}</h3>
-                    <p>Capacité de la salle: {event.room.roomCapacity}</p>
-                    <h3>Activité: {event.activity.name}</h3>
-                    <h4>Spectateurs:</h4>
-                    <ul>
-                      {event.activity.spectators.map(spectator => (
-                        <li key={spectator.id}>
-                          {spectator.firstName} {spectator.lastName} - Rôle: {spectator.role}
-                        </li>
-                      ))}
-                    </ul>
-                  </li>
-                ))}
-              </ul>
-            )}
           </div>
         </Desktop>
 
@@ -91,4 +68,19 @@ export default function Home() {
       </Container>
     </>
   )
+}
+
+export const AddEventCard = () => {
+
+  return <Card>
+    <CardContent>
+      <div  style={{ display: 'flex', flexDirection: 'column' }}>
+        <Button href={'/event/add'}>
+          <Typography variant={'h1'}>
+            +
+          </Typography>
+        </Button>
+      </div>
+    </CardContent>
+  </Card>
 }
