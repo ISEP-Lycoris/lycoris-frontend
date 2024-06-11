@@ -45,42 +45,16 @@ export default function Home() {
               </BasicBreadcrumbs>
             </div>
             <div style={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'center', paddingTop: '36px', }}>
-              <Grid>
-                <EventCard Date={""} Place={""} Title={""}/>
-                <EventCard Date={""} Place={""} Title={""}/>
-                <EventCard Date={""} Place={""} Title={""}/>
-                <EventCard Date={""} Place={""} Title={""}/>
-                <EventCard Date={""} Place={""} Title={""}/>
-              </Grid>
+              {events.length === 0 ? (
+                <p>Aucun événement trouvé.</p>
+              ) : (
+                <Grid>
+                  {
+                    events.map((event) => (<EventCard key={event.id} event={event}/>))
+                  }
+                </Grid>
+              )}
             </div>
-          </div>
-          <div>
-            <h1>Liste des événements</h1>
-            {events.length === 0 ? (
-              <p>Aucun événement trouvé.</p>
-            ) : (
-              <ul>
-                {events.map(event => (
-                  <li key={event.id}>
-                    <h2>{event.name}</h2>
-                    <p>Heure de début: {event.begin_time}</p>
-                    <p>Heure de fin: {event.end_time}</p>
-                    <p>Durée: {event.duration} minutes</p>
-                    <h3>Salle: {event.room.name}</h3>
-                    <p>Capacité de la salle: {event.room.roomCapacity}</p>
-                    <h3>Activité: {event.activity.name}</h3>
-                    <h4>Spectateurs:</h4>
-                    <ul>
-                      {event.activity.spectators.map(spectator => (
-                        <li key={spectator.id}>
-                          {spectator.firstName} {spectator.lastName} - Rôle: {spectator.role}
-                        </li>
-                      ))}
-                    </ul>
-                  </li>
-                ))}
-              </ul>
-            )}
           </div>
         </Desktop>
 
