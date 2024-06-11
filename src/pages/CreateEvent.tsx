@@ -6,8 +6,8 @@ const CreateEvent: React.FC = () => {
   const [place, setPlace] = useState('');
   const [description, setDescription] = useState('');
   const [animator, setAnimator] = useState('');
-  const [beginHour, setBeginHour] = useState('');
-  const [endHour, setEndHour] = useState('');
+  const [time, setTime] = useState('');
+
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -28,12 +28,8 @@ return (
         <input type="date" value={date} onChange={e => setDate(e.target.value)} />
       </div>
       <div className="input-group">
-        <label>Begin Hour:</label>
-        <input type="time" value={beginHour} onChange={e => setBeginHour(e.target.value)} />
-      </div>
-      <div className="input-group">
-        <label>End Hour:</label>
-        <input type="time" value={endHour} onChange={e => setEndHour(e.target.value)} />
+        <label>Estimated time needed:</label>
+        <input type="time" value={time} onChange={e => setTime(e.target.value)} />
       </div>
       <div className="input-group">
         <label>Place:</label>
