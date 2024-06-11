@@ -1,0 +1,58 @@
+.create-event-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 80%;
+    max-width: 500px;
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+    background-color: #fff;
+  }
+  
+  .create-event-form label {
+    margin-right: 10px;
+    margin-top: 10px;
+  }
+  .input-group {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+  
+  .create-event-form input,
+  .create-event-form textarea {
+    margin-top: 5px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+  }
+  body {
+    font-family: 'Inter', sans-serif;
+  }
+  
+  .create-event-form input[type="submit"] {
+    width: 50%;
+    margin-top: 20px;
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+  }
+  
+  /* Center the title */
+  .container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .container h1 {
+    text-align: center;
+  }
+  .create-event-form div {
+    display: flex;
+    flex-direction: column;
+  }
