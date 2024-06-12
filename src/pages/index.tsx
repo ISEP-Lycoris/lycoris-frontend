@@ -40,25 +40,28 @@ export default function Home() {
       <Container>
 
         <Desktop>
-          <div style={{ display: 'flex', flexDirection: 'column', width: '100%', }}>
-            <div>
-              <BasicBreadcrumbs>
-                <Typography color="text.primary">Evenements</Typography>
-              </BasicBreadcrumbs>
-            </div>
-            <div style={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'center', paddingTop: '36px', }}>
-              {events.length === 0 ? (
-                <p>Aucun événement trouvé.</p>
-              ) : (
-                <Grid>
-                  {
-                    events.map((event) => (<EventCard key={event.id} event={event}/>))
-                  }
-                  <AddEventCard/>
-                </Grid>
-              )}
-            </div>
-          </div>
+        <div style={{ display: 'flex', flexDirection: 'column', width: '100%', }}>
+  <div>
+    <BasicBreadcrumbs>
+      <Typography color="text.primary">Evenements</Typography>
+    </BasicBreadcrumbs>
+  </div>
+  <div style={{ display: 'flex', flexDirection: 'row', width: '100%', justifyContent: 'center', paddingTop: '36px', }}>
+    {Array.isArray(events) && events.length === 0 ? (
+      <p>Aucun événement trouvé.</p>
+    ) : (
+      <Grid>
+        {
+          Array.isArray(events) && events.map((event) => {
+            console.log('Event:', event); // Add this line
+            return (<EventCard key={event.id} event={event}/>)
+          })
+        }
+        <AddEventCard/>
+      </Grid>
+    )}
+  </div>
+</div>
         </Desktop>
 
         <Mobile>
@@ -75,7 +78,7 @@ export const AddEventCard = () => {
   return <Card>
     <CardContent>
       <div  style={{ display: 'flex', flexDirection: 'column' }}>
-        <Button href={'/event/add'}>
+        <Button href={'/CreateEvent'}>
           <Typography variant={'h1'}>
             +
           </Typography>
