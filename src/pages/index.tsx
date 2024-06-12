@@ -22,7 +22,7 @@ export default function Home() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await fetch('http://localhost:8081/events');
+        const response = await fetch('http://localhost:8081/event');
         const data: Event[] = await response.json();
         setEvents(data);
       } catch (error) {

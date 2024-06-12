@@ -19,11 +19,12 @@ export default function EventPage() {
   useEffect(() => {
     const fetchEvents = async () => {
       try {
-        const response = await fetch(`http://localhost:8081/events/${id}`);
+        const response = await fetch(`http://localhost:8081/event/${id}`);
         const data: Event = await response.json();
         setEvent(data);
       } catch (error) {
         console.error('Erreur lors de la récupération des données:', error);
+
       }
     };
 
