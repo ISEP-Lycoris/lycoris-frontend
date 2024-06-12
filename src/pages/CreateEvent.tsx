@@ -1,18 +1,113 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+
+interface Person {
+  id: number;
+  firstName: string;
+  lastName: string;
+  role: string;
+  firstChoice: string;
+  secondChoice: string;
+  thirdChoice: string;
+}
+interface Room {
+  id: number;
+  name: string;
+  roomCapacity: number;
+  disponible: boolean;
+  ouvertureTime: any;
+  fermetureTime: any;
+  lastEventEndTime: number;
+}
+interface Animator {
+  id: number;
+  lastName: string;
+  firstName: string;
+  role: string;
+  firstChoice: string;
+  secondChoice: string;
+  thirdChoice: string;
+}
+
+interface Spectator {
+  id: number;
+  lastName: string;
+  firstName: string;
+  role: string;
+  firstChoice: string;
+  secondChoice: string;
+  thirdChoice: string;
+}
+
+interface Activity {
+  id: number;
+  animators: Animator[];
+  spectators: Spectator[];
+  name: string;
+}
+
 
 const CreateEvent: React.FC = () => {
   const [title, setTitle] = useState('');
-  const [date, setDate] = useState('');
-  const [place, setPlace] = useState('');
-  const [description, setDescription] = useState('');
-  const [animator, setAnimator] = useState('');
-  const [time, setTime] = useState('');
+  const [rooms, setRooms] = useState<Room[]>([]);
+  const [time, setTime] = useState<number>(0);
+  const [persons, setPersons] = useState<Person[]>([]);
+  const [room, setRoom] = React.useState('');
+  const [activities, setActivities] = useState<Activity[]>([]);
+  const [activity, setActivity] = useState('');
+
+ 
+  useEffect(() => {
+    axios.get('http://localhost:8081/activities')
+      .then(response => {
+        setActivities(response.data);
+      })
+      .catch(error => {
+        console.error('There was an error!', error);
+      });
+  }, []);
+
+  useEffect(() => {
+    axios.get('http://localhost:8081/persons')
+      .then(response => {
+        setPersons(response.data);
+      })
+      .catch(error => {
+        console.error('There was an error!', error);
+      });
+  }, []);
+  
+  useEffect(() => {
+    axios.get('http://localhost:8081/rooms')
+      .then(response => {
+        setRooms(response.data);
+      })
+      .catch(error => {
+        console.error('There was an error!', error);
+      });
+  }, []);
 
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-
-    console.log(`Submitting new event: ${title}, ${date}, ${place}, ${description}, ${animator}`);
+  
+    const newEvent = {
+      name: title,
+      roomId: parseInt(room), // this should be the id of the selected room
+      activityId: parseInt(activity), // this should be the id of the selected activity
+      duration: time,
+      beginTime: null,
+      endTime: null
+    };
+    
+  
+    axios.post('http://localhost:8081/event', newEvent)
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error('There was an error!', error);
+      });
   };
 
 return (
@@ -24,24 +119,24 @@ return (
         <input type="text" value={title} onChange={e => setTitle(e.target.value)} />
       </div>
       <div className="input-group">
-        <label>Date:</label>
-        <input type="date" value={date} onChange={e => setDate(e.target.value)} />
+        <label>Estimated time needed (in minutes):</label>
+        <input type="number" value={time} onChange={e => setTime(Number(e.target.value))} />
       </div>
       <div className="input-group">
-        <label>Estimated time needed:</label>
-        <input type="time" value={time} onChange={e => setTime(e.target.value)} />
+        <label>Room:</label>
+        <select value={room} onChange={e => setRoom(e.target.value)}>
+          {rooms.map((room, index) => (
+            <option key={index} value={room.id}>{room.name}</option>
+          ))}
+        </select>
       </div>
       <div className="input-group">
-        <label>Place:</label>
-        <input type="text" value={place} onChange={e => setPlace(e.target.value)} />
-      </div>
-      <div className="input-group">
-        <label>Description:</label>
-        <textarea value={description} onChange={e => setDescription(e.target.value)} />
-      </div>
-      <div className="input-group">
-        <label>Animator:</label>
-        <input type="text" value={animator} onChange={e => setAnimator(e.target.value)} />
+        <label>Activity:</label>
+        <select value={activity} onChange={e => setActivity(e.target.value)}>
+          {activities.map((activity, index) => (
+            <option key={index} value={activity.id}>{activity.name}</option>
+          ))}
+        </select>
       </div>
       <input type="submit" value="Submit" />
     </form>
