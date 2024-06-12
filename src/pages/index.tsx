@@ -13,7 +13,6 @@ import {type Event } from "@/API/types/types"
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 
-const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const router = useRouter()

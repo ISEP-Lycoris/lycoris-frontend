@@ -14,9 +14,16 @@ export type Spectator = {
   thirdChoice: string;
 };
 
+export type Animator = {
+  id: number;
+  lastName: string;
+  firstName: string;
+  role: string;
+};
+
 export type Activity = {
   id: number;
-  animators: any[];
+  animators: Animator[];
   spectators: Spectator[];
   name: string;
 };
