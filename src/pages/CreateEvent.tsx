@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-
+import { useHistory } from 'react-router-dom';
 interface Person {
   id: number;
   firstName: string;
@@ -90,6 +90,7 @@ const CreateEvent: React.FC = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const history = useHistory();
   
     const newEvent = {
       name: title,
@@ -99,6 +100,9 @@ const CreateEvent: React.FC = () => {
       beginTime: null,
       endTime: null
     };
+    console.log(newEvent); // for debugging purposes, remove this line before deploying to production
+    console.log("room and activity", room, activity); // for debugging purposes, remove this line before deploying to production
+    console.log(typeof room, typeof activity, time); // for debugging purposes, remove this line before deploying to productiontivity);
     
   
     axios.post('http://localhost:8081/event', newEvent)
@@ -108,6 +112,7 @@ const CreateEvent: React.FC = () => {
       .catch(error => {
         console.error('There was an error!', error);
       });
+      history.push('/');
   };
 
 return (
@@ -124,11 +129,14 @@ return (
       </div>
       <div className="input-group">
         <label>Room:</label>
-        <select value={room} onChange={e => setRoom(e.target.value)}>
-          {rooms.map((room, index) => (
-            <option key={index} value={room.id}>{room.name}</option>
-          ))}
-        </select>
+        <select value={room} onChange={e => {
+    console.log("Selected room: ", e.target.value);
+    setRoom(e.target.value);
+}}>
+    {rooms.map((room, index) => (
+        <option key={index} value={room.id}>{room.name}</option>
+    ))}
+</select>
       </div>
       <div className="input-group">
         <label>Activity:</label>
